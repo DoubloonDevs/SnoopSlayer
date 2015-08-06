@@ -1,5 +1,5 @@
 {
-  "main": "index.html",
+  "main": "loading.html",
   "name": "Snoop Slayer",
   "version": "0.1.0",
   "keywords": [ "demo", "node-webkit" ],
