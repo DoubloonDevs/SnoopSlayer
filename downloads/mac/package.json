@@ -3,10 +3,8 @@
   "name": "Snoop Slayer",
   "version": "0.1.0",
   "keywords": [ "demo", "node-webkit" ],
-  "splashscreen": "img/spr_alert_boss_1.png",
   "window": {
     "title": "Snoop Slayer",
-    //"icon": "link.png",
     "toolbar": false,
     "resizable": false,
     "width": 1280,

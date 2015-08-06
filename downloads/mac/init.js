@@ -1,11 +1,14 @@
-var current_version = 121;
+var current_version = 120;
+var updates = true;
 
 var gui = require('nw.gui');
 var win = gui.Window.get();
 
 var fs = require('fs'),
     path = require('path'),
-    https = require('https');
+    https = require('https'),
+    sys = require('util'),
+    exec = require('child_process').exec;
 
 var mod_dir = path.join(gui.App.dataPath, 'mods'),
     mod_dir_ls = fs.readdirSync(mod_dir);
@@ -28,25 +31,31 @@ var download = function(url, dest, cb) {
   });
 };
 
+//hello chicken nugget
+
 require('dns').resolve('www.google.com', function(err) {
-  if (err) {} // no connection
-  else {
-    download('https://raw.githubusercontent.com/DoubloonDevs/SnoopSlayer/gh-pages/downloads/mac/download.DATA', main_dir + 'download.DATA');
-    version = fs.readFileSync('download.DATA', 'utf8');
-    if (version > current_version) {
-      download('https://raw.githubusercontent.com/DoubloonDevs/SnoopSlayer/gh-pages/downloads/mac/index.html', main_dir + 'index.html');
-      download('https://raw.githubusercontent.com/DoubloonDevs/SnoopSlayer/gh-pages/downloads/mac/package.json', main_dir + 'package.json');
-      download('https://raw.githubusercontent.com/DoubloonDevs/SnoopSlayer/gh-pages/downloads/mac/init.js', main_dir + 'init.js');
-      download('https://raw.githubusercontent.com/DoubloonDevs/SnoopSlayer/gh-pages/downloads/mac/Game.js', main_dir + 'Game.js');
-      download('https://raw.githubusercontent.com/DoubloonDevs/SnoopSlayer/gh-pages/downloads/mac/styles.css', main_dir + 'styles.css');
-      download('https://raw.githubusercontent.com/DoubloonDevs/SnoopSlayer/gh-pages/downloads/mac/LoadMedia.js', main_dir + 'LoadMedia.js');
-    }
-  }
+  if (err)
+    updates = false;
+  else 
+    updates = true;
 });
+
+if (updates) {
+  download('https://raw.githubusercontent.com/DoubloonDevs/SnoopSlayer/gh-pages/downloads/mac/download.DATA', main_dir + 'download.DATA');
+  setInterval(function() {
+    version = fs.readFileSync('download.DATA', 'utf8');
+    download('https://raw.githubusercontent.com/DoubloonDevs/SnoopSlayer/gh-pages/downloads/mac/init.js', main_dir + 'init.js');
+    download('https://raw.githubusercontent.com/DoubloonDevs/SnoopSlayer/gh-pages/downloads/mac/Game.js', main_dir + 'Game.js');
+    download('https://raw.githubusercontent.com/DoubloonDevs/SnoopSlayer/gh-pages/downloads/mac/styles.css', main_dir + 'styles.css');
+    download('https://raw.githubusercontent.com/DoubloonDevs/SnoopSlayer/gh-pages/downloads/mac/LoadMedia.js', main_dir + 'LoadMedia.js');
+    download('https://raw.githubusercontent.com/DoubloonDevs/SnoopSlayer/gh-pages/downloads/mac/index.html', main_dir + 'index.html');
+    download('https://raw.githubusercontent.com/DoubloonDevs/SnoopSlayer/gh-pages/downloads/mac/package.json', main_dir + 'package.json');
+  });
+}
     
 var canvas = document.getElementById('myCanvas'),
     c = canvas.getContext('2d'),
-    build = "Beta 1.2.1";
+    build = "Beta 1.2.0";
     
 canvas.width = 1280;
 canvas.height = 720;
