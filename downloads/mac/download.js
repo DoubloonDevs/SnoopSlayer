@@ -1,8 +1,7 @@
-var current_version = 120;
-var version = 121;
-var updates = true;
+var current_version = 121;
+var version;
 
-require('nw.gui').Window.get().showDevTools();
+//require('nw.gui').Window.get().showDevTools();
 
 var gui = require('nw.gui');
 var win = gui.Window.get();
@@ -19,7 +18,7 @@ var mod_dir = path.join(gui.App.dataPath, 'mods'),
 fs.createReadStream(mod_dir + '/mods.js').pipe(fs.createWriteStream(main_dir + 'mods.js'));
 
 var main_dir_index = global.module.filename,
-    main_dir = main_dir_index.replace('/index.html', '/');
+    main_dir = main_dir_index.replace('/load.html', '/');
 
 var download = function(url, dest, cb) {
   var file = fs.createWriteStream(dest);
@@ -27,6 +26,8 @@ var download = function(url, dest, cb) {
     response.pipe(file);
     file.on('finish', function() {
       file.close(cb);  // close() is async, call cb after close completes.
+      console.log('Download complete : ' + url);
+      document.write('<html style="background: #333333"><h2 style="font-family: Courier New; color: #fff;">Download complete : ' + url + '</h2></html>');
     });
   }).on('error', function(err) { // Handle errors
     fs.unlink(dest); // Delete the file async. (But we don't check the result)
@@ -34,25 +35,26 @@ var download = function(url, dest, cb) {
   });
 };
 
-require('dns').resolve('www.google.com', function(err) {
+var updates = require('dns').resolve('www.google.com', function(err) {
   if (err)
     updates = false;
   else 
     updates = true;
+  return updates;
 });
 
 if (updates) {
   download('https://raw.githubusercontent.com/DoubloonDevs/SnoopSlayer/gh-pages/downloads/mac/download.DATA', main_dir + 'download.DATA');
-  version = fs.readFileSync('download.DATA', 'utf8');
-  if (version > current_version) {
-    download('https://raw.githubusercontent.com/DoubloonDevs/SnoopSlayer/gh-pages/downloads/mac/init.js', main_dir + 'init.js');
-    download('https://raw.githubusercontent.com/DoubloonDevs/SnoopSlayer/gh-pages/downloads/mac/Game.js', main_dir + 'Game.js');
-    download('https://raw.githubusercontent.com/DoubloonDevs/SnoopSlayer/gh-pages/downloads/mac/styles.css', main_dir + 'styles.css');
-    download('https://raw.githubusercontent.com/DoubloonDevs/SnoopSlayer/gh-pages/downloads/mac/LoadMedia.js', main_dir + 'LoadMedia.js');
-    download('https://raw.githubusercontent.com/DoubloonDevs/SnoopSlayer/gh-pages/downloads/mac/index.html', main_dir + 'index.html');
-    download('https://raw.githubusercontent.com/DoubloonDevs/SnoopSlayer/gh-pages/downloads/mac/package.json', main_dir + 'package.json');
-  }
+  download('https://raw.githubusercontent.com/DoubloonDevs/SnoopSlayer/gh-pages/downloads/mac/init.js', main_dir + 'init.js');
+  download('https://raw.githubusercontent.com/DoubloonDevs/SnoopSlayer/gh-pages/downloads/mac/Game.js', main_dir + 'Game.js');
+  download('https://raw.githubusercontent.com/DoubloonDevs/SnoopSlayer/gh-pages/downloads/mac/styles.css', main_dir + 'styles.css');
+  download('https://raw.githubusercontent.com/DoubloonDevs/SnoopSlayer/gh-pages/downloads/mac/LoadMedia.js', main_dir + 'LoadMedia.js');
+  download('https://raw.githubusercontent.com/DoubloonDevs/SnoopSlayer/gh-pages/downloads/mac/index.html', main_dir + 'index.html');
+  download('https://raw.githubusercontent.com/DoubloonDevs/SnoopSlayer/gh-pages/downloads/mac/package.json', main_dir + 'package.json');
 }
+
+version = fs.readFileSync('download.DATA', 'utf8');
+
 setInterval(function() {
   self.location = "index.html";
 }, 1000);
