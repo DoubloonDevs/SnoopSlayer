@@ -17,7 +17,7 @@ var main_dir_index = global.module.filename,
 
 var canvas = document.getElementById('myCanvas'),
     c = canvas.getContext('2d'),
-    build = "Beta 1.2.1";
+    build = "Beta 1.2.2";
     
 canvas.width = 1280;
 canvas.height = 720;
