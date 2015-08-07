@@ -10,6 +10,6 @@
     "resizable": false,
     "width": 1280,
     "height": 720,
-    "position": "mouse"
+    "position": "center"
   }
 }
