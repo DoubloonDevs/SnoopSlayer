@@ -1,5 +1,6 @@
 var gui = require('nw.gui');
 var win = gui.Window.get();
+win.setPosition('center');
 
 var fs = require('fs'),
     path = require('path'),
