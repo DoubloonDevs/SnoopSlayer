@@ -1,7 +1,7 @@
 var current_version = 121;
 var version;
 
-require('nw.gui').Window.get().showDevTools();
+//require('nw.gui').Window.get().showDevTools();
 
 var gui = require('nw.gui');
 var win = gui.Window.get();
