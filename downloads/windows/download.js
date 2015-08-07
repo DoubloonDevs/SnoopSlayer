@@ -2,9 +2,11 @@ require('nw.gui').Window.get().setPosition('center');
 
 var current_version = 121;
 var version;
+var version_checked = false;
+var download_files = false;
 var progress = 0;
 
-//require('nw.gui').Window.get().showDevTools();
+require('nw.gui').Window.get().showDevTools();
 
 var gui = require('nw.gui');
 var win = gui.Window.get();
@@ -29,10 +31,11 @@ var download = function(url, dest, cb) {
     response.pipe(file);
     file.on('finish', function() {
       file.close(cb);  // close() is async, call cb after close completes.
-      progress += 0.125;
-      require('nw.gui').Window.get().setProgressBar(progress);
       console.log('Download complete : ' + url);
       document.write('<html style="background: #333333"><h2 style="font-family: Courier New; color: #fff;">Download complete : ' + url + '</h2></html>');
+      progress += 0.125;
+      require('nw.gui').Window.get().setProgressBar(progress);
+      download_files = true;
     });
   }).on('error', function(err) { // Handle errors
     fs.unlink(dest); // Delete the file async. (But we don't check the result)
@@ -40,21 +43,24 @@ var download = function(url, dest, cb) {
   });
 };
 
-download('https://raw.githubusercontent.com/DoubloonDevs/SnoopSlayer/gh-pages/downloads/windows/download.DATA', main_dir + 'download.DATA');
-setTimeout(function() {
-  version = fs.readFileSync('download.DATA', 'utf8');
-  if (version > current_version) {
-    download('https://raw.githubusercontent.com/DoubloonDevs/SnoopSlayer/gh-pages/downloads/windows/init.js', main_dir + 'init.js');
-    download('https://raw.githubusercontent.com/DoubloonDevs/SnoopSlayer/gh-pages/downloads/windows/Game.js', main_dir + 'Game.js');
-    download('https://raw.githubusercontent.com/DoubloonDevs/SnoopSlayer/gh-pages/downloads/windows/ClientInput.js', main_dir + 'ClientInput.js');
-    download('https://raw.githubusercontent.com/DoubloonDevs/SnoopSlayer/gh-pages/downloads/windows/styles.css', main_dir + 'styles.css');
-    download('https://raw.githubusercontent.com/DoubloonDevs/SnoopSlayer/gh-pages/downloads/windows/LoadMedia.js', main_dir + 'LoadMedia.js');
-    download('https://raw.githubusercontent.com/DoubloonDevs/SnoopSlayer/gh-pages/downloads/windows/index.html', main_dir + 'index.html');
-    download('https://raw.githubusercontent.com/DoubloonDevs/SnoopSlayer/gh-pages/downloads/windows/package.json', main_dir + 'package.json');
+function loop() {
+  if (!version_checked) {
+    download('https://raw.githubusercontent.com/DoubloonDevs/SnoopSlayer/gh-pages/downloads/windows/download.DATA', main_dir + 'download.DATA');
+    version_checked = true;
   }
-}, 1000);
-
-setTimeout(function() {
-  window.open('index.html');
-  window.close();
-}, 2000);
+  if (download_files) {
+    version = fs.readFileSync('download.DATA', 'utf8');
+    if (version > current_version) {
+      download('https://raw.githubusercontent.com/DoubloonDevs/SnoopSlayer/gh-pages/downloads/windows/init.js', main_dir + 'init.js');
+      download('https://raw.githubusercontent.com/DoubloonDevs/SnoopSlayer/gh-pages/downloads/windows/Game.js', main_dir + 'Game.js');
+      download('https://raw.githubusercontent.com/DoubloonDevs/SnoopSlayer/gh-pages/downloads/windows/ClientInput.js', main_dir + 'ClientInput.js');
+      download('https://raw.githubusercontent.com/DoubloonDevs/SnoopSlayer/gh-pages/downloads/windows/styles.css', main_dir + 'styles.css');
+      download('https://raw.githubusercontent.com/DoubloonDevs/SnoopSlayer/gh-pages/downloads/windows/LoadMedia.js', main_dir + 'LoadMedia.js');
+      download('https://raw.githubusercontent.com/DoubloonDevs/SnoopSlayer/gh-pages/downloads/windows/index.html', main_dir + 'index.html');
+      download('https://raw.githubusercontent.com/DoubloonDevs/SnoopSlayer/gh-pages/downloads/windows/package.json', main_dir + 'package.json');
+      current_version = version;
+    }
+  }
+  if (progress == 1) self.location = 'index.html';
+}
+setInterval(loop, 1000/60);
