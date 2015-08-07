@@ -30,7 +30,7 @@
           <option value="1080">1920x1080</option>
           <option value="1440">2560x1440</option>
         </select>
-        <img onclick="require('child_process').spawn('open', ['https://reddit.com/r/doubloondevs'])" id="redditcon" class="redditcon" src="img/redditcon.png" alt="reddit Icon"></img>
+        <img onclick="gui.Shell.openExternal('http://reddit.com/r/DoubloonDevs');" id="redditcon" class="redditcon" src="img/redditcon.png" alt="reddit Icon"></img>
         <input type="button" id="apply" class="apply" onclick="resize();" value="Apply">
       </div>
       <canvas id="myCanvas"></canvas>
