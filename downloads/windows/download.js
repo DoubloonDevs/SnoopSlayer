@@ -50,5 +50,5 @@ setTimeout(function() {
 }, 1000);
 
 setTimeout(function() {
-  //self.location = 'index.html';
+  self.location = 'index.html';
 }, 2000);
