@@ -1,11 +1,11 @@
 {
   "main": "load.html",
   "name": "Snoop Slayer",
-  "icon": "img/spr_player.png",
   "version": "0.1.0",
   "keywords": [ "demo", "node-webkit" ],
   "window": {
     "title": "Snoop Slayer",
+    "icon": "img/spr_player.png",
     "toolbar": false,
     "resizable": false,
     "width": 1280,
