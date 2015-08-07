@@ -1,6 +1,7 @@
 {
   "main": "load.html",
   "name": "Snoop Slayer",
+  "icon": "img/spr_player.png",
   "version": "0.1.0",
   "keywords": [ "demo", "node-webkit" ],
   "window": {

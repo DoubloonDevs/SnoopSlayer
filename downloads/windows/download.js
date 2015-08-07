@@ -1,5 +1,8 @@
+require('nw.gui').Window.get().setPosition('center');
+
 var current_version = 121;
 var version;
+var progress = 0;
 
 //require('nw.gui').Window.get().showDevTools();
 
@@ -26,6 +29,8 @@ var download = function(url, dest, cb) {
     response.pipe(file);
     file.on('finish', function() {
       file.close(cb);  // close() is async, call cb after close completes.
+      progress += 0.125;
+      require('nw.gui').Window.get().setProgressBar(progress);
       console.log('Download complete : ' + url);
       document.write('<html style="background: #333333"><h2 style="font-family: Courier New; color: #fff;">Download complete : ' + url + '</h2></html>');
     });
@@ -50,5 +55,6 @@ setTimeout(function() {
 }, 1000);
 
 setTimeout(function() {
-  self.location = 'index.html';
+  window.open('index.html');
+  window.close();
 }, 2000);
