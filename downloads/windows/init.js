@@ -1,5 +1,6 @@
 var gui = require('nw.gui');
 var win = gui.Window.get();
+win.setProgressBar(0);
 win.setPosition('center');
 
 var fs = require('fs'),
@@ -39,6 +40,7 @@ var width,
   boolean_particles = 0,
   shake = false,
   worldX = 0,
+  time_null_input = 0,
   worldY = 0;
 
 var game_start = true,

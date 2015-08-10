@@ -7,6 +7,7 @@
     "title": "Snoop Slayer",
     "icon": "img/spr_player.png",
     "toolbar": false,
+    "frame": false,
     "resizable": false,
     "width": 1280,
     "height": 720,

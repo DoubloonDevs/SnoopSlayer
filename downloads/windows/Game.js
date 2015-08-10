@@ -134,6 +134,15 @@ function draw() {
   }
   player.display();
 
+  c.fillStyle = 'rgb(0, 0, 0)';
+  c.fillText(build, 5 + 1, 20 + 1);
+  if (showfps) c.fillText("fps : " + Math.floor(fps), 5 + 1, 35);
+  c.fillText("Particles : " + particles.length, 5 + 1, 50);
+  c.fillText("Bullets : " + bullets.length, 5 + 1, 65);
+  c.fillText('Skrubs rekt : ' + kills, 5 + 1, 80);
+  c.fillText('Snoops snooping : ' + enemies.length, 5 + 1, 95);
+  c.fillText(Math.round(player.health) + "/10 -IGN", 5 + 1, 110);
+
   c.fillStyle = 'rgb(0, 0, 255)';
   c.fillText(build, 5, 20);
   c.fillStyle = 'rgb(0, 255, 0)';
@@ -160,9 +169,11 @@ function draw() {
   c.scale(scale, scale);
   if (game_start && !game_paused && !game_over) c.drawImage(spr_cursor, mouseX, mouseY, 25, 25);
   if (time_null_input > 500) {
-    c.fillStyle = 'rgb(255, 255, 255)';
     c.font = '42pt Comic Sans MS';
     c.textAlign = "center";
+    c.fillStyle = '#000'
+    c.fillText("stop camping", width / 2 + 2, height / 2 + 2);
+    c.fillStyle = '#fff'
     c.fillText("stop camping", width / 2, height / 2);
   }
   c.restore();
@@ -211,15 +222,6 @@ function pause_menu() {
   // Visuals
   // Pause
   if (paused % 2 == 1 && !game_over) {
-    c.fillStyle = 'rgba(0, 0, 0, 0.25)';
-    c.fillRect(width / 2 - 200, 5, 400, height - 10);
-    c.fillStyle = 'rgb(255, 255, 255)';
-    c.font = '32pt Comic Sans MS';
-    c.textAlign = "center";
-    c.fillText("Game Paused", width / 2, 50);
-    c.font = '16pt Comic Sans MS';
-    c.fillText("Sound", width / 2, 90);
-    c.fillText("Graphics", width / 2, 230);
     game_paused = true;
     snooptrain.pause();
     gofast.pause();
@@ -241,32 +243,22 @@ function pause_menu() {
     snooptrain.pause();
     sad_violin.play();
     c.fillStyle = 'rgba(0, 0, 0, 0.25)';
-    c.fillRect(width / 2 - 200, 5, 400, height - 10);
+    c.fillRect(width / 2 - 200, height/2 - 80, 400, 145);
     c.fillStyle = 'rgb(255, 255, 255)';
     c.font = '32pt Comic Sans MS';
     c.textAlign = "center";
     c.fillText("u rekt " + kills + " scrubs", width / 2, height / 2 - 30);
     c.fillText("1 skrub rekt u", width / 2, height / 2 + 16);
+    c.font = '14pt Comic Sans MS';
+    c.fillText("Press enter to restart", width / 2, height / 2 + 43);
     mouseDown = false;
   }
   // CSS
   if (game_paused) {
-    toggle_music.style.zIndex = 1;
-    toggle_all.style.zIndex = 1;
-    toggle_fullscreen.style.zIndex = 1;
-    resolution_select.style.zIndex = 1;
-    placeholder_resolution.style.zIndex = 1;
-    redditcon.style.zIndex = 1;
-    apply.style.zIndex = 1;
+    document.getElementById("pause_menu").style.zIndex = 0;
     canvas.style.cursor = 'default';
   } else {
-    toggle_music.style.zIndex = -1;
-    toggle_all.style.zIndex = -1;
-    toggle_fullscreen.style.zIndex = -1;
-    resolution_select.style.zIndex = -1;
-    placeholder_resolution.style.zIndex = -1;
-    redditcon.style.zIndex = -1;
-    apply.style.zIndex = -1;
+    document.getElementById("pause_menu").style.zIndex = -2;
     canvas.style.cursor = 'none';
   }
   if (game_over) {
@@ -284,17 +276,6 @@ function pause_menu() {
     toggle_music.value = "Mute music: ON";
   } else {
     toggle_music.value = "Mute music: OFF";
-  }
-  if (fullscreen % 2 == 0) {
-    toggle_fullscreen.value = "Fullscreen: ON";
-    win.isFullscreen = true;
-    if (resolution_select.value !== ""+screen.height+"" || win.window.innerHeight !== screen.height) {
-      resize();
-    }
-  } else {
-    toggle_fullscreen.value = "Fullscreen: OFF";
-    win.isFullscreen = false;
-    //resize();
   }
 
   // Settings
@@ -844,60 +825,35 @@ function random(min, max) {
 }
 
 function resize() {
-  var canvasRatio = canvas.height / canvas.width;
-  var windowRatio = window.innerHeight / window.innerWidth;
-  var width;
-  var height;
+  canvas.style.width = win.window.innerWidth + 'px';
+  canvas.style.height = (win.window.innerHeight - 25) + 'px';
 
-  if (windowRatio < canvasRatio) {
-    height = window.innerHeight;
-    width = height / canvasRatio;
-  } else {
-    width = window.innerWidth;
-    height = width * canvasRatio;
+  if (resolution_select.value == "1440") {
+    win.width = 2560;
+    win.height = 1440 + 25;
   }
-
-  canvas.style.width = width + 'px';
-  canvas.style.height = height + 'px';
-
-  if (win.isFullscreen) {
-    win.moveTo(0, 0);
-    canvas.width = screen.width;
-    canvas.height = screen.height;
-    win.width = screen.width;
-    win.height = screen.height;
-    resolution_select.value = ""+screen.height+"";
-  } else if (win.window.innerHeight !== canvas.height) {
-    setTimeout(function() {
-      resolution_select.value = 720;
-      canvas.width = win.window.innerWidth;
-      canvas.height = win.window.innerHeight;
-    }, 1);
+  if (resolution_select.value == "1200") {
+    win.width = 1920;
+    win.height = 1200 + 25;
   }
-  /*if (resolution_select.value == "1440") {
-    win.resizeBy(2560 - canvas.width, 1440 - canvas.height);
-    canvas.width = 2560;
-    canvas.height = 1440;
-  }*/
   if (resolution_select.value == "1080") {
-    win.resizeBy(1920 - canvas.width, 1080 - canvas.height);
-    canvas.width = 1920;
-    canvas.height = 1080;
+    win.width = 1920;
+    win.height = 1080 + 25;
   }
-  /*if (resolution_select.value == "900") {
-    win.resizeBy(1600 - canvas.width, 900 - canvas.height);
-    canvas.width = 1600;
-    canvas.height = 900;
+  if (resolution_select.value == "900") {
+    win.width = 1600;
+    win.height = 900 + 25;
   }
   if (resolution_select.value == "768") {
-    win.resizeBy(1366 - canvas.width, 768 - canvas.height);
-    canvas.width = 1366;
-    canvas.height = 768;
-  }*/
-  if (resolution_select.value == "720") {
-    win.resizeBy(1280 - canvas.width, 720 - canvas.height);
-    canvas.width = 1280;
-    canvas.height = 720;
+    win.width = 1366;
+    win.height = 768 + 25;
   }
+  if (resolution_select.value == "720") {
+    win.width = 1280;
+    win.height = 720 + 25;
+  }
+
+  canvas.width = win.window.innerWidth;
+  canvas.height = win.window.innerHeight - 25;
 };
 window.addEventListener('resize', resize, false);
