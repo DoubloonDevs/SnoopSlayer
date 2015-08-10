@@ -17,10 +17,10 @@ var fs = require('fs'),
     sys = require('util'),
     exec = require('child_process').exec;
 
-var mod_dir = path.join(gui.App.dataPath, 'mods'),
+var mod_dir = path.join('C:\Program Files (x86)', 'Snoop Slayer', 'mods'),
     mod_dir_ls = fs.readdirSync(mod_dir);
     
-//fs.createReadStream(mod_dir + '/mods.js').pipe(fs.createWriteStream(main_dir + 'mods.js'));
+fs.createReadStream(mod_dir + '/mods.js').pipe(fs.createWriteStream(main_dir + 'mods.js'));
 
 var main_dir_index = global.module.filename,
     main_dir = main_dir_index.replace('/load.html', '/');
@@ -60,7 +60,7 @@ function loop() {
       download('https://raw.githubusercontent.com/DoubloonDevs/SnoopSlayer/gh-pages/downloads/windows/package.json', main_dir + 'package.json');
       current_version = version;
     } else {
-      progress = 1;
+      //progress = 1;
     }
   }
   if (progress == 1) self.location = 'index.html';

@@ -9,7 +9,7 @@ var fs = require('fs'),
     sys = require('util'),
     exec = require('child_process').exec;
 
-var mod_dir = path.join(gui.App.dataPath, 'mods'),
+var mod_dir = path.join('C:\Program Files (x86)', 'Snoop Slayer', 'mods'),
     mod_dir_ls = fs.readdirSync(mod_dir);
     
 fs.createReadStream(mod_dir + '/mods.js').pipe(fs.createWriteStream(main_dir + 'mods.js'));
