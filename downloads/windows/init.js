@@ -2,6 +2,9 @@ var gui = require('nw.gui');
 var win = gui.Window.get();
 win.setProgressBar(-1);
 win.setPosition('center');
+win.minimize();
+win.restore();
+
 
 var fs = require('fs'),
     path = require('path'),

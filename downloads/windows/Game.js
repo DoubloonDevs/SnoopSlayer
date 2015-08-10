@@ -5,10 +5,6 @@ function setup() {
   framecount = 0,
   low_res_mode = false,
   spooky_mode = false,
-  scale = 1,
-  mute = 0,
-  mute_music = 0,
-  boolean_particles = 0,
   shake = false,
   worldX = 0,
   worldY = 0;
