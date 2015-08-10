@@ -354,7 +354,7 @@ gabeChat.prototype.display = function() {
 };
 
 function handleBosses() {
-  if (framecount % 1000 == 1 && !alert_boss_deployed && kills >= 35) {
+  if (framecount % Math.round(spawn_time * 13) == 1 && !alert_boss_deployed && kills >= 35) {
     enemies.push(new Enemy(width / 2, height / 2, 419, 120, 'alert_boss'));
     alert_boss_deployed = true;
   } else {
