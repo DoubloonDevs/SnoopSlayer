@@ -569,15 +569,20 @@ function Turret(x, y, w, h) {
 }
 Turret.prototype.update = function() {
   if (!game_paused) {
-    bullets.push(new Bullet(this, 25, 15, "pringles", 20, 3));
-    if (kills >= 300) bullets.push(new Bullet(this, 7, 7, "doritos", 15, 3));
-    if (kills >= 400) this.height = 52;
+    bullets.push(new Bullet(this, 25, 15, "pringles", 20, 1));
+    /*if (kills >= 300) bullets.push(new Bullet(this, 7, 7, "doritos", 15, 3));
+    if (kills >= 400) this.height = 52;*/
   }
-  if (enemies.length >= 1) {
-    this.dx = enemies[enemies.length - 1].x - (this.x);
-    this.dy = enemies[enemies.length - 1].y - (this.y);
+  if (0 < enemies.length) {
+    for (var a, d = Number.MAX_VALUE, b = 0; b < enemies.length; b++) {
+      var c = enemies[b],
+          e = Math.pow(player.x - c.x, 2) + Math.pow(player.y - c.y, 2);
+      e < d && (a = c, d = e)
+    }
+    this.dx = a.x - this.x;
+    this.dy = a.y - this.y;
+    this.angle = Math.atan2(this.dy, this.dx)
   }
-  this.angle = Math.atan2(this.dy, this.dx);
   if (!game_paused) this.health--;
   if (this.health < 1) this.alive = false;
 };
