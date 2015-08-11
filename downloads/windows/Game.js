@@ -246,7 +246,7 @@ function pause_menu() {
     c.fillText("u rekt " + kills + " scrubs", width / 2, height / 2 - 30);
     c.fillText("1 skrub rekt u", width / 2, height / 2 + 16);
     c.font = '14pt Comic Sans MS';
-    c.fillText("Press enter to restart", width / 2, height / 2 + 43);
+    c.fillText("Press r to restart", width / 2, height / 2 + 43);
     mouseDown = false;
   }
   // CSS

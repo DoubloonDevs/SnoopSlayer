@@ -39,6 +39,11 @@ img:hover {
 h1 {
   color: #fff;
 }
+h2 {
+  margin-top: 10px;
+  margin-bottom: 5px;
+  color: #fff;
+}
 #pause_menu {
   top: 111%;
   z-index: 1;
@@ -72,6 +77,16 @@ input:hover, select:hover {
 }
 #resolution_select {
   width: 42%;
+}
+#console {
+  background-color: #000;
+  width: 100%;
+  height: 250px;
+  color: lime;
+  border: 1px solid #000;
+  font-family: "Lucida Console", Monaco, monospace;
+  text-align: left;
+  border-left-width: 5px;
 }
 #redditcon {
   width: 100%;
