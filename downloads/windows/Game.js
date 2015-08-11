@@ -251,10 +251,14 @@ function pause_menu() {
   }
   // CSS
   if (game_paused) {
-    document.getElementById("pause_menu").style.zIndex = 0;
+    //document.getElementById("pause_menu").style.zIndex = 0;
+    document.getElementById("pause_menu").style.top = 11 + '%';
+    //canvas.style.webkitFilter = "blur(5px)";
     canvas.style.cursor = 'default';
   } else {
-    document.getElementById("pause_menu").style.zIndex = -2;
+    //document.getElementById("pause_menu").style.zIndex = -2;
+    document.getElementById("pause_menu").style.top = -100 + '%';
+    //canvas.style.webkitFilter = "blur(0px)";
     canvas.style.cursor = 'none';
   }
   if (game_over) {
@@ -568,7 +572,7 @@ function Turret(x, y, w, h) {
   this.dy = 0;
 }
 Turret.prototype.update = function() {
-  if (!game_paused) {
+  if (!game_paused && !game_over) {
     bullets.push(new Bullet(this, 25, 15, "pringles", 20, 1));
     /*if (kills >= 300) bullets.push(new Bullet(this, 7, 7, "doritos", 15, 3));
     if (kills >= 400) this.height = 52;*/
@@ -826,9 +830,6 @@ function random(min, max) {
 }
 
 function resize() {
-  canvas.style.width = win.window.innerWidth + 'px';
-  canvas.style.height = (win.window.innerHeight - 25) + 'px';
-
   if (resolution_select.value == "1440") {
     win.width = 2560;
     win.height = 1440 + 25;
@@ -856,5 +857,10 @@ function resize() {
 
   canvas.width = win.window.innerWidth;
   canvas.height = win.window.innerHeight - 25;
+
+  setTimeout(function() {
+    canvas.style.width = win.window.innerWidth + 'px';
+    canvas.style.height = (win.window.innerHeight - 25) + 'px';
+  }, 100);
 };
 window.addEventListener('resize', resize, false);
