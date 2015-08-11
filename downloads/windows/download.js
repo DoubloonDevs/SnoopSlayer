@@ -6,7 +6,7 @@ var version_checked = false;
 var download_files = false;
 var progress = 0;
 
-//require('nw.gui').Window.get().showDevTools();
+require('nw.gui').Window.get().showDevTools();
 
 var gui = require('nw.gui');
 var win = gui.Window.get();

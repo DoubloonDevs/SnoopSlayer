@@ -228,6 +228,10 @@ hr.small {
     margin: 10px;
 }
 
+a {
+    -webkit-transition: all 0.25s ease;
+}
+
 /* Map */
 
 .map {

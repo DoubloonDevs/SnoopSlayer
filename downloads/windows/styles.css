@@ -1,6 +1,6 @@
 html {
-  background: #000000;
-  font-family: "Courier New", Courier, monospace;
+  background: #000;
+  font-family: "Comic Sans MS";
 }
 
 body {
@@ -9,28 +9,51 @@ body {
   overflow-y: hidden;
 }
 
-.dt {
-  position: relative;
+.header {
+  background-color: #3E79EA;
+  z-index: 1;
+  height: 25px;
+  -webkit-app-region: drag;
+  width: 100%;
+  border-bottom: 2px solid #2459E4;
 }
-#canvas{
-  background:#000;
+#title {
+  margin-left: calc(50% - 147px);
+  font-size: 12pt;
+  font-family: "Comic Sans MS";
+  color: #fff;
+}
+#close {
+  margin-left: 7px;
+}
+img {
+  -webkit-app-region: no-drag;
+  -webkit-filter: brightness(100%);
+  -webkit-transition: all 0.25s ease;
+}
+img:hover {
+  cursor: pointer;
+  -webkit-filter: brightness(115%);
 }
 
+h1 {
+  color: #fff;
+}
 #pause_menu {
-  top: 30%;
+  top: 11%;
   left: 35%;
   background-color: rgba(0, 0, 0, 0.25);
   position: absolute;
   width: 27%;
+  -webkit-transition: all 0.25s ease;
 }
-
 input, select {
   border: 1px solid rgb(4, 26, 55);
   display: inline-block;
   cursor: pointer;
-  color: rgb(255, 255, 255);
-  font-family: 'Comic Sans MS';
+  color: #fff;
   font-size: 2.5vh;
+  font-family: 'Comic Sans MS';
   text-shadow: rgb(40, 57, 102) 0px 2px 0px;
   text-align: center;
   background-color: rgba(55, 75, 118, 0.75);
@@ -38,26 +61,21 @@ input, select {
   margin-bottom: 1%;
   margin-top: 1%;
   height: 6vh;
-}
-#resolution_select {
-  width: 42%;
-}
-
-#close {
-  margin-left: 7px;
-}
-
-#minimize {
-  
-}
-
-img {
   -webkit-app-region: no-drag;
   -webkit-filter: brightness(100%);
   -webkit-transition: all 0.25s ease;
 }
-img:hover {
-  -webkit-filter: brightness(115%);
+input:hover, select:hover {
+  -webkit-filter: brightness(125%);
+}
+#resolution_select {
+  width: 42%;
+}
+#redditcon {
+  width: 100%;
+  margin-top: 3%;
+  margin-bottom: 1%;
+  -webkit-transition: all 0.25s ease;
 }
 
 canvas {
@@ -67,74 +85,5 @@ canvas {
   z-index: -1;
   top: 0;
   left: 0;
-}
-html {
-  background: #000000;
-  font-family: "Courier New", Courier, monospace;
-}
-
-body {
-  margin: 0px;
-  overflow-x: hidden;
-  overflow-y: hidden;
-}
-
-.dt {
-  position: relative;
-}
-#canvas{
-  background:#000;
-}
-
-#pause_menu {
-  top: 30%;
-  left: 35%;
-  background-color: rgba(0, 0, 0, 0.25);
-  position: absolute;
-  width: 27%;
-}
-
-input, select {
-  border: 1px solid rgb(4, 26, 55);
-  display: inline-block;
-  cursor: pointer;
-  color: rgb(255, 255, 255);
-  font-family: 'Comic Sans MS';
-  font-size: 2.5vh;
-  text-shadow: rgb(40, 57, 102) 0px 2px 0px;
-  text-align: center;
-  background-color: rgba(55, 75, 118, 0.75);
-  width: 100%;
-  margin-bottom: 1%;
-  margin-top: 1%;
-  height: 6vh;
-}
-#resolution_select {
-  width: 42%;
-}
-
-#close {
-  margin-left: 7px;
-}
-
-#minimize {
-  
-}
-
-img {
-  -webkit-app-region: no-drag;
-  -webkit-filter: brightness(100%);
   -webkit-transition: all 0.25s ease;
-}
-img:hover {
-  -webkit-filter: brightness(115%);
-}
-
-canvas {
-  width: 100vw;
-  vertical-align: middle;
-  cursor: none;
-  z-index: -1;
-  top: 0;
-  left: 0;
 }
