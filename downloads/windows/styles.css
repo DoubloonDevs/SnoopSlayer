@@ -11,14 +11,15 @@ body {
 
 .header {
   background-color: #3E79EA;
-  z-index: 2;
-  height: 25px;
-  -webkit-app-region: drag;
-  width: 100%;
+  border: 1px solid #2459E4;
   border-bottom: 2px solid #2459E4;
+  z-index: 2;
+  height: 24px;
+  -webkit-app-region: drag;
+  width: calc(100% - 2px);
 }
 #title {
-  margin-left: calc(50% - 147px);
+  margin-left: calc(50% - 130px);
   font-size: 12pt;
   font-family: "Comic Sans MS";
   color: #fff;
@@ -89,7 +90,6 @@ input:hover, select:hover {
 }
 
 canvas {
-  width: 100vw;
   z-index: -1;
   -webkit-transition: all 0.5s ease;
 }
