@@ -845,8 +845,8 @@ function resize() {
     win.height = 1080 + 25;
   }
   if (resolution_select.value == "900") {
-    win.width = 1600;
-    win.height = 900 + 25;
+    win.width = 1605;
+    win.height = 905 + 25;
   }
   if (resolution_select.value == "768") {
     win.width = 1366;
