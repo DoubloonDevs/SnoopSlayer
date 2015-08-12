@@ -251,14 +251,10 @@ function pause_menu() {
   }
   // CSS
   if (game_paused) {
-    //document.getElementById("pause_menu").style.zIndex = 0;
-    document.getElementById("pause_menu").style.top = 11 + '%';
-    //canvas.style.webkitFilter = "blur(5px)";
+    document.getElementById("pause_menu").style.top = 'calc(50% - '+Math.round(document.getElementById('pause_menu').clientHeight/2)+'px + 15px';
     canvas.style.cursor = 'default';
   } else {
-    //document.getElementById("pause_menu").style.zIndex = -2;
     document.getElementById("pause_menu").style.top = -100 + '%';
-    //canvas.style.webkitFilter = "blur(0px)";
     canvas.style.cursor = 'none';
   }
   if (game_over) {
@@ -829,14 +825,20 @@ function random(min, max) {
   return Math.random() * (max - min) + min;
 }
 
+function execute_code(code) {
+  try {
+    eval(code);
+  }
+  catch(err) {
+    document.getElementById('console').placeholder += err.message+'\n';
+    document.getElementById('console').value = '';
+  }
+}
+
 function resize() {
   if (resolution_select.value == "1440") {
     win.width = 2560;
     win.height = 1440 + 25;
-  }
-  if (resolution_select.value == "1200") {
-    win.width = 1920;
-    win.height = 1200 + 25;
   }
   if (resolution_select.value == "1080") {
     win.width = 1920;

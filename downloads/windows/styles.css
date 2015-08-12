@@ -47,15 +47,15 @@ h2 {
 #pause_menu {
   top: 111%;
   z-index: 1;
-  left: 35%;
+  left: calc(50% - 13.5%);
+  width: 27%;
   background-color: rgba(0, 0, 0, 0.25);
   position: absolute;
-  width: 27%;
-  -webkit-filter: drop-shadow(2px 2px 20px black);
+  -webkit-filter: drop-shadow(0px 0px 20px black);
   -webkit-transition: all 0.5s ease;
 }
-input, select {
-  border: 1px solid rgb(4, 26, 55);
+input, select, a {
+  border: 0px solid rgb(4, 26, 55);
   display: inline-block;
   cursor: pointer;
   color: #fff;
@@ -75,32 +75,21 @@ input, select {
 input:hover, select:hover {
   -webkit-filter: brightness(125%);
 }
-#resolution_select {
-  width: 42%;
-}
 #console {
   background-color: #000;
-  width: 100%;
-  height: 190px;
-  color: lime;
   border: 1px solid #000;
+  width: 100%;
+  height: 21vh;
+  color: #fff;
+  resize: none;
   font-family: "Lucida Console", Monaco, monospace;
   text-align: left;
-  border-left-width: 5px;
-}
-#redditcon {
-  width: 100%;
-  margin-top: 3%;
-  margin-bottom: 1%;
+  font-size: 1.75vh;
   -webkit-transition: all 0.25s ease;
 }
 
 canvas {
   width: 100vw;
-  vertical-align: middle;
-  cursor: none;
   z-index: -1;
-  /* top: 0; */
-  /* left: 0; */
   -webkit-transition: all 0.5s ease;
 }
