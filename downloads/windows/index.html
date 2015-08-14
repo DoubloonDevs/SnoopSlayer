@@ -11,11 +11,11 @@
       <img src="window/img/minimize.png" onclick="require('nw.gui').Window.get().minimize();" id="minimize">
       <p1 id="title">Snoop Slayer</p1>
     </div>
-    <div id="pause_menu" style="margin-left: 0px; top: calc((50% - 314px) + 15px);" align="center">
+    <div id="pause_menu" style="margin-left: 0px; top: calc((50% - 417px) + 15px);" align="center">
       <ul style="list-style-type:none;padding-left: 0px;margin-left: 16px;margin-right: 16px;">
         <h1>Game Paused</h1>
         <li>
-          <input type="button" id="toggle_all" class="toggle_all" onclick="mute++" value="Mute FX: ON" style="z-index: 1;">
+          <input type="button" id="toggle_all" class="toggle_all" onclick="mute++" value="Mute FX: OFF" style="z-index: 1;">
         </li>
         <li>
           <input type="button" id="toggle_music" class="toggle_music" onclick="mute_music++" value="Mute music: OFF" style="z-index: 1;">
@@ -43,7 +43,10 @@
         </li>
       </ul>
     </div>
-    <canvas id="myCanvas" width="1280" height="720" style="width: 1280px; height: 720px; cursor: default;"></canvas>
+    <div id="hud-container">
+      <div id="hud"></div>
+    </div>
+    <canvas id="myCanvas" width="1920" height="1080" style="width: 1920px; height: 1080px; cursor: default;"></canvas>
     <script src="ClientInput.js"></script>
     <script src="init.js"></script>
     <script src="Game.js"></script>

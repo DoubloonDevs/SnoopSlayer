@@ -89,6 +89,26 @@ input:hover, select:hover {
   -webkit-transition: all 0.25s ease;
 }
 
+#hud-container {
+  width: 100%;
+  height: 10%;
+  position: absolute;
+  bottom: 5px;
+  left: 5px;
+  -webkit-filter: drop-shadow(0px 0px 20px black);
+}
+#hud {
+  width: 100%;
+  height: 100%;
+  -webkit-user-select: none;
+  -webkit-transition: all 0.5s ease;
+}
+#equiped-doritos {margin: 1%; -webkit-user-select: none;}
+#equiped-diamond {margin: 1%; -webkit-user-select: none;}
+#equiped-weed {margin: 1%; -webkit-user-select: none;}
+#equiped-sanic {margin: 1%; -webkit-user-select: none;}
+#equiped-dew {margin: 1%; -webkit-user-select: none;}
+
 canvas {
   z-index: -1;
   -webkit-transition: all 0.5s ease;

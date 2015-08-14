@@ -181,7 +181,8 @@ function update() {
   handlePowerups();
   handleBosses();
   if (spawn_timer < 1) {
-    enemies.push(new Enemy(random(200, width - 200), random(600, height - 600), 45, 45, 'enemy'));
+    if (!spooky_mode) enemies.push(new Enemy(random(200, width - 200), random(600, height - 600), 45, 45, 'enemy'));
+    else enemies.push(new Enemy(random(200, width - 200), random(600, height - 600), 37, 45, 'spooky'));
     spawn_timer = spawn_time;
   }
   spawn_timer--;
@@ -190,23 +191,19 @@ function update() {
     game_over = true;
     player.health = 0;
   }
-  if (spawn_time > 5) spawn_time -= 0.005;
+  if (spawn_time > 5) spawn_time -= 0.002;
   if (kills == 50) {
     turrets_stored++;
     kills = 51;
   }
-  if (kills % 200 === 0 && kills > 1) {
+  if (kills % 175 === 0 && kills > 1) {
     kills++;
     turrets_stored++;
   }
-  var spook_spooked = false;
-  if (kills >= 100 && kills <= 200) {
-    spooky_mode = true;
-    spawn_time = 5;
-  } else {
-    if (kills >= 201 && kills <= 202) spawn_time = 21;
-    spooky_mode = false;
+  if (kills % 225 === 0 && !spooky_mode) {
+    if (kills > 1 && kills > 225) spook(10000);
   }
+  if (kills == 100) spook(10000), kills++;
   if (time_null_input > 500) {
     shake_scale += 0.5;
   }
@@ -362,6 +359,20 @@ function handleBosses() {
   }
 }
 
+function spook(frames) {
+  var spawn_time_before = spawn_time;
+  console.log(spawn_time_before);
+  spooky_mode = true;
+  setTimeout(function() {
+    spooky_mode = false;
+    spawn_time = spawn_time_before;
+    console.log(spawn_time_before);
+  }, frames);
+  if (spooky_mode) {
+    spawn_time = 5;
+  }
+}
+
 function handlePowerups() {
   if (mouseDown) {
     if (!doritos_power && !dew_power && !sanic_power && !diamond_power && !weed_power) {
@@ -403,7 +414,7 @@ function handlePowerups() {
   }
   mountdew_timer--;
   if (mountdew_timer < 1) {
-    drops.push(new Drop(random(100, width - 100), random(100, height - 100), 50, 25, "mountdew"));
+    drops.push(new Drop(random(100, width - 100), random(100, height - 100), 50, 35, "mountdew"));
     mountdew_timer = 1600 * 3;
   }
   dew_power_timer--;
@@ -471,26 +482,56 @@ function handlePowerups() {
 function give_doritos(time) {
   doritos_power = true;
   doritos_power_timer = time;
+  document.getElementById('hud').innerHTML += "<img id='equiped-doritos' src='img/spr_doritos_bag.png' style='width: 0vh;'>";
+  setTimeout(function() {document.getElementById('equiped-doritos').style.width = 6.5 + 'vh';}, 100);
+  setTimeout(function() {
+    document.getElementById('equiped-doritos').style.width = 0 + 'vh';
+    setTimeout(function() {document.getElementById('equiped-doritos').parentNode.removeChild(document.getElementById('equiped-doritos'));}, 500);
+  }, doritos_power_timer*(1000/60));
 }
 
 function give_dew(time) {
   dew_power = true;
   dew_power_timer = time;
+  document.getElementById('hud').innerHTML += "<img id='equiped-dew' src='img/spr_mountdew.png' style='width: 0vh;'>";
+  setTimeout(function() {document.getElementById('equiped-dew').style.width = 12 + 'vh';}, 100);
+  setTimeout(function() {
+    document.getElementById('equiped-dew').style.width = 0 + 'vh';
+    setTimeout(function() {document.getElementById('equiped-dew').parentNode.removeChild(document.getElementById('equiped-dew'));}, 500);
+  }, dew_power_timer*(1000/60));
 }
 
 function give_sanic(time) {
   sanic_power = true;
   sanic_power_timer = time;
+  document.getElementById('hud').innerHTML += "<img id='equiped-sanic' src='img/spr_sanic.png' style='width: 0vh;'>";
+  setTimeout(function() {document.getElementById('equiped-sanic').style.width = 12 + 'vh';}, 100);
+  setTimeout(function() {
+    document.getElementById('equiped-sanic').style.width = 0 + 'vh';
+    setTimeout(function() {document.getElementById('equiped-sanic').parentNode.removeChild(document.getElementById('equiped-sanic'));}, 500);
+  }, sanic_power_timer*(1000/60));
 }
 
 function give_diamond(time) {
   diamond_power = true;
   diamond_power_timer = time;
+  document.getElementById('hud').innerHTML += "<img id='equiped-diamond' src='img/spr_diamond_block.png' style='width: 0vh;'>";
+  setTimeout(function() {document.getElementById('equiped-diamond').style.width = 8 + 'vh';}, 100);
+  setTimeout(function() {
+    document.getElementById('equiped-diamond').style.width = 0 + 'vh';
+    setTimeout(function() {document.getElementById('equiped-diamond').parentNode.removeChild(document.getElementById('equiped-diamond'));}, 500);
+  }, diamond_power_timer*(1000/60));
 }
 
 function give_weed(time) {
   weed_power = true;
   weed_power_timer = time;
+  document.getElementById('hud').innerHTML += "<img id='equiped-weed' src='img/spr_weed_leaf.png' style='width: 0vh;'>";
+  setTimeout(function() {document.getElementById('equiped-weed').style.width = 8 + 'vh';}, 100);
+  setTimeout(function() {
+    document.getElementById('equiped-weed').style.width = 0 + 'vh';
+    setTimeout(function() {document.getElementById('equiped-weed').parentNode.removeChild(document.getElementById('equiped-weed'));}, 500);
+  }, weed_power_timer*(1000/60));
 }
 
 function Player(x, y, w, h) {
@@ -570,8 +611,6 @@ function Turret(x, y, w, h) {
 Turret.prototype.update = function() {
   if (!game_paused && !game_over) {
     bullets.push(new Bullet(this, 25, 15, "pringles", 20, 1));
-    /*if (kills >= 300) bullets.push(new Bullet(this, 7, 7, "doritos", 15, 3));
-    if (kills >= 400) this.height = 52;*/
   }
   if (0 < enemies.length) {
     for (var a, d = Number.MAX_VALUE, b = 0; b < enemies.length; b++) {
@@ -590,8 +629,7 @@ Turret.prototype.display = function() {
   c.save();
   c.translate(this.x, this.y);
   c.rotate(this.angle);
-  if (kills < 400) c.drawImage(spr_turret, -this.width / 2, -this.height / 2, this.width, this.height);
-  if (kills >= 400) c.drawImage(spr_turret_1, -this.width / 2, -this.height / 2, this.width, this.height);
+  c.drawImage(spr_turret, -this.width / 2, -this.height / 2, this.width, this.height);
   c.restore();
 };
 
@@ -718,10 +756,14 @@ function Enemy(x, y, w, h, behaviour) {
   if (behaviour == 'alert_boss') {
     this.speed = 4;
     this.health = 350;
-  } else if (behaviour == 'enemy') {
+  }
+  if (behaviour == 'enemy') {
     this.speed = 2;
     this.health = 15;
-    if (spooky_mode) this.width -= 6;
+  }
+  if (behaviour == 'spooky') {
+    this.speed = 2;
+    this.health = 7;
   }
   this.angle = 0;
   this.alive = true;
@@ -750,8 +792,10 @@ Enemy.prototype.display = function() {
   if (this.behaviour != 'alert_boss') c.rotate(this.angle);
   if (showhitboxes) c.fillRect(-this.width / 2, -this.height / 2, this.width, this.height);
   if (this.behaviour == 'enemy') {
-    if (spooky_mode) c.drawImage(spr_spooky_enemy, -this.width / 2, -this.height / 2, this.width, this.height);
-    else c.drawImage(spr_enemy, -this.width / 2, -this.height / 2, this.width, this.height);
+    c.drawImage(spr_enemy, -this.width / 2, -this.height / 2, this.width, this.height);
+  }
+  if (this.behaviour == 'spooky') {
+    c.drawImage(spr_spooky_enemy, -this.width / 2, -this.height / 2, this.width, this.height);
   }
   c.restore();
   c.save();
@@ -793,6 +837,7 @@ function collisionBetween(shapeA, shapeB) {
   if (Math.abs(vX) < hWidths && Math.abs(vY) < hHeights) {
     var oX = hWidths - Math.abs(vX),
       oY = hHeights - Math.abs(vY);
+    particles.push(new Particle(shapeA.x, shapeB.y, 5, 5, 'hitmarker'));
     if (shapeB.behaviour == 'player') player.health -= 0.05;
     if (shapeA.behaviour == 'bullet') {
       shapeA.alive = false;
@@ -801,14 +846,11 @@ function collisionBetween(shapeA, shapeB) {
       } else {
         shapeB.health -= 2;
       }
-      if (shapeB.behaviour == 'enemy' && boolean_particles % 2 == 0) {
-        particles.push(new Particle(shapeA.x, shapeB.y, 5, 5, 'hitmarker'));
-      }
       if (shapeB.behaviour == 'alert_boss' && boolean_particles % 2 == 0) {
         particles.push(new Particle(shapeA.x, shapeB.y, 5, 5, 'adblock'));
       }
-      if (!diamond_power) hit.play(); /*hit.currentTime = 0;*/
-      else smash.play(), smash.currentTime = 0;
+      if (!diamond_power) hit.play();
+      else smash.play(), smash.currentTime = random(0, 5);
     }
     if (oX >= oY) {
       if (vY > 0) colDir = "t", shapeA.y += oY;
@@ -845,8 +887,8 @@ function resize() {
     win.height = 1080 + 25;
   }
   if (resolution_select.value == "900") {
-    win.width = 1600;
-    win.height = 900 + 25;
+    win.width = 1607;
+    win.height = 907 + 25;
   }
   if (resolution_select.value == "768") {
     win.width = 1366;
